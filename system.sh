@@ -2,6 +2,6 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-getRootDir() {
+system.getRootDir() {
   cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd
 }
