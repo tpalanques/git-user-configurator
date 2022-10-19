@@ -12,13 +12,15 @@ configuration.read_file() {
 }
 
 configuration.get() {
-  local value
+  local configName
+  local configValue
+  configName="${1}"
 
-  value="$(configuration.read_file "$userConfig" "${1}")"
-  if [ "$value" = "__UNDEFINED__" ]; then
-    value="$(configuration.read_file "$userDefaultConfig" "${1}")"
+  configValue="$(configuration.read_file "$userConfig" "${configName}")"
+  if [ "$configValue" = "__UNDEFINED__" ]; then
+    configValue="$(configuration.read_file "$userDefaultConfig" "${configName}")"
   fi
-  printf -- "%s" "${value}"
+  printf -- "%s" "${configValue}"
 }
 
 configuration.get name
