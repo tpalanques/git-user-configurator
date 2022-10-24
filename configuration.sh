@@ -16,10 +16,11 @@ userDefaultConfig=$(system.getRootPath)/default/user.cfg
 
 #==========================================================================
 #
-#   DESCRIPTION:  Gets root path for this project
+#   DESCRIPTION:  Reads configuration in a given file
 #       PRIVACY:  PRIVATE
 #         USAGE:  system.getRootPath "${CONFIGURATION_NAME}"
-#        [ARG1]:  Configuration name
+#          ARG1:  File where to get configuration from
+#          ARG2:  Configuration name to get
 #
 #==========================================================================
 configuration.read_file() {
