@@ -4,8 +4,8 @@ IFS=$'\n\t'
 
 source system.sh
 
-userConfig=$(system.getRootDir)/conf/user.cfg
-userDefaultConfig=$(system.getRootDir)/default/user.cfg
+userConfig=$(system.getRootPath)/conf/user.cfg
+userDefaultConfig=$(system.getRootPath)/default/user.cfg
 
 configuration.read_file() {
   (grep -E "^${2}=" -m 1 "${1}" 2>/dev/null || echo "VAR=__UNDEFINED__") | head -n 1 | cut -d '=' -f 2-
@@ -20,7 +20,7 @@ configuration.get() {
   if [ "$configValue" = "__UNDEFINED__" ]; then
     configValue="$(configuration.read_file "$userDefaultConfig" "${configName}")"
   fi
-  printf -- "%s" "${configValue}"
+  echo "${configValue}"
 }
 
 configuration.get name
