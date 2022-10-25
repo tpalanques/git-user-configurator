@@ -6,8 +6,6 @@
 #   DESCRIPTION:  tools to read and write configuration files
 #
 #==========================================================================
-set -euo pipefail
-IFS=$'\n\t'
 
 source system.sh
 

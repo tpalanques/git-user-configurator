@@ -6,8 +6,6 @@
 #   DESCRIPTION:  tools prettify terminal output
 #
 #==========================================================================
-set -euo pipefail
-IFS=$'\n\t'
 
 FONT_ESCAPE='\033['
 
