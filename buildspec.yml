@@ -1,0 +1,19 @@
+version: 0.2
+
+run-as: admin
+
+env:
+  shell: bash
+
+phases:
+  install:
+    run-as: admin
+    on-failure: ABORT
+    commands:
+      - echo [`date`][INSTALL] Entered install phase, running tests...
+      - cd test
+      - . .file.unit
+      - echo [`date`][INSTALL] Tests run
+    finally:
+      - cd
+      - echo [`date`][INSTALL] Leaving install phase
