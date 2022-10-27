@@ -25,12 +25,10 @@ file.createFolder(){
 
 #file.create(){
   #split path string by last /
-#    file.createFolder
-#    touch file
-#}
-
-#file.remove(){
-  # rm file
+  # check folder existance
+      # if not file.createFolder
+      # else do nothing
+  # touch file
 #}
 
 #==========================================================================
