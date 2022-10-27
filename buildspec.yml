@@ -13,6 +13,6 @@ phases:
       - echo Entered install phase, running tests...
       - cd test
       - . .file.unit
-      - echo [`date`][INSTALL] Tests run
+      - echo Tests run
     finally:
       - echo Leaving install phase
