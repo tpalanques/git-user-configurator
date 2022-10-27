@@ -10,7 +10,7 @@ file.unit.create_a_folder(){
   rm -rf ${basePath}
 
   # Act
-  file.createPath "${path}"
+  file.createFolder "${path}"
 
   # Assert
   unit.assertEqual "$(file.pathExists ${path})" "1" "${FUNCNAME[0]}" "Folder ${path} is not present but we created it"

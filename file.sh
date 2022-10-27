@@ -11,13 +11,13 @@
   # echo string >> filePath
 #}
 
-file.createPath(){
+file.createFolder(){
   mkdir -p "$1"
 }
 
 #file.create(){
   #split path string by last /
-#    file.createPath
+#    file.createFolder
 #    touch file
 #}
 
@@ -50,7 +50,7 @@ file.pathExists(){
 #   echo string > filePath
 #}
 
-#file.createPath /home/Toni/PhpstormProjects/git-user-configurator/new/file/path
+#file.createFolder /home/Toni/PhpstormProjects/git-user-configurator/new/file/path
 #file.pathExists /home/Toni/PhpstormProjects/git-user-configurator/new/file/path
 #file.pathExists /home/Toni/PhpstormProjects/git-user-configurator/new/file/paths
 #file.removePath /home/Toni/PhpstormProjects/git-user-configurator/new
