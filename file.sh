@@ -11,6 +11,14 @@
   # echo string >> filePath
 #}
 
+#==========================================================================
+#
+#   DESCRIPTION:  Creates a folder
+#       PRIVACY:  PUBLIC
+#         USAGE:  file.createFolder "${FOLDER_PATH}"
+#          ARG1:  path where folder needs to be created
+#
+#==========================================================================
 file.createFolder(){
   mkdir -p "$1"
 }
@@ -25,6 +33,14 @@ file.createFolder(){
   # rm file
 #}
 
+#==========================================================================
+#
+#   DESCRIPTION:  Removes recursively a path
+#       PRIVACY:  PUBLIC
+#         USAGE:  file.removePath "${PATH}"
+#          ARG1:  base path that needs to be removed
+#
+#==========================================================================
 file.removePath(){
    rm -rf "$1"
 }
@@ -49,8 +65,3 @@ file.pathExists(){
 #file.write(){
 #   echo string > filePath
 #}
-
-#file.createFolder /home/Toni/PhpstormProjects/git-user-configurator/new/file/path
-#file.pathExists /home/Toni/PhpstormProjects/git-user-configurator/new/file/path
-#file.pathExists /home/Toni/PhpstormProjects/git-user-configurator/new/file/paths
-#file.removePath /home/Toni/PhpstormProjects/git-user-configurator/new
