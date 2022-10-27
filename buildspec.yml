@@ -15,5 +15,4 @@ phases:
       - . .file.unit
       - echo [`date`][INSTALL] Tests run
     finally:
-      - cd
       - echo [`date`][INSTALL] Leaving install phase
