@@ -10,9 +10,9 @@ phases:
     run-as: admin
     on-failure: ABORT
     commands:
-      - echo [`date`][INSTALL] Entered install phase, running tests...
+      - echo Entered install phase, running tests...
       - cd test
       - . .file.unit
       - echo [`date`][INSTALL] Tests run
     finally:
-      - echo [`date`][INSTALL] Leaving install phase
+      - echo Leaving install phase
