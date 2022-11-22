@@ -2,7 +2,7 @@
 #==========================================================================
 #
 #          FILE:  configuration.sh
-#         USAGE:  source test.sh
+#         USAGE:  source configuration.sh
 #   DESCRIPTION:  tools to read and write configuration files
 #
 #==========================================================================

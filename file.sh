@@ -60,6 +60,3 @@ file.pathExists(){
     echo 0
   fi
 }
-#file.write(){
-#   echo string > filePath
-#}
