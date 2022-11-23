@@ -1,4 +1,8 @@
 #!/bin/bash
+THIS_PATH=`readlink -f "${BASH_SOURCE[0]}" 2>/dev/null||echo $0`
+DIR_PATH=`dirname "${THIS_PATH}"`
+source "${DIR_PATH}/../system.sh"
+
 #==========================================================================
 #
 #          FILE:  unit.sh
@@ -7,7 +11,8 @@
 #
 #==========================================================================
 
-source ../font.sh
+source "$(system.getRootPath)"/font.sh
+source "$(system.getRootPath)"/file.sh
 
 #==========================================================================
 #
