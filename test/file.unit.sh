@@ -6,6 +6,21 @@ source "${DIR_PATH}/../system.sh"
 source "$(system.getTestPath)"/unit.sh
 source "$(system.getRootPath)"/file.sh
 
+file.unit.create_a_file() {
+  # Arrange
+  local path="/tmp/test/file_unit_create_file/new/file"
+  local basePath="/tmp/test"
+
+  # Act
+  file.create "${path}"
+
+  # Assert
+  unit.assertEqual "$(file.fileExists ${path})" "1" "${FUNCNAME[0]}" "File ${path} is not present but we created it"
+
+  # TearDown
+  rm -rf ${basePath}
+}
+
 file.unit.create_a_folder() {
   # Arrange
   local path="/tmp/test/file_unit_create_folder/new/folder"
@@ -24,18 +39,18 @@ file.unit.create_a_folder() {
 
 file.unit.file_exists() {
   # Arrange
-    local path="/etc/issue"
+  local path="/etc/issue"
 
-    # Assert
-    unit.assertEqual "$(file.fileExists ${path})" "1" "${FUNCNAME[0]}" "File ${path} does not exist"
+  # Assert
+  unit.assertEqual "$(file.fileExists ${path})" "1" "${FUNCNAME[0]}" "File ${path} does not exist"
 }
 
 file.unit.file_does_not_exist() {
   # Arrange
-      local path="/etc/issues"
+  local path="/etc/issues"
 
-      # Assert
-      unit.assertEqual "$(file.fileExists ${path})" "0" "${FUNCNAME[0]}" "File ${path} does exist"
+  # Assert
+  unit.assertEqual "$(file.fileExists ${path})" "0" "${FUNCNAME[0]}" "File ${path} does exist"
 }
 
 file.unit.folder_exists() {
@@ -88,6 +103,7 @@ file.unit.remove_an_existing_folder() {
   rm -rf ${basePath}
 }
 
+file.unit.create_a_file
 file.unit.create_a_folder
 file.unit.file_exists
 file.unit.file_does_not_exist

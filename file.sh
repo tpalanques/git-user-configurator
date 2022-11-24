@@ -12,17 +12,16 @@
 #}
 
 file.create() {
-  local dirname=$(file.getDirName "$1")
-  local basename=$(file.getBaseName "$1")
+  local fullPath="${1}"
+  local dirName
+  dirName=$(file.getDirName "$1")
 
-  # check folder existance
-  if [[ $(file.pathExists "${dirname}${basename}") ]]; then
-    echo "file already exists"
-    # if not file.createFolder
-  else
-    echo "file does not exist"
+  if [ "$(file.fileExists "${fullPath}")" -eq "0" ]; then
+    if [ "$(file.pathExists "${dirName}")" -eq "0" ]; then
+      file.createFolder "${dirName}"
+    fi
+    touch "${fullPath}"
   fi
-  # touch file if it doesn't exist
 }
 
 #==========================================================================
@@ -94,7 +93,7 @@ file.removePath() {
 #
 #   DESCRIPTION:  Checks if path exists and returns binary boolean information
 #       PRIVACY:  PUBLIC
-#         USAGE:  file.pathExists "${FILE_PATH}"
+#         USAGE:  file.pathExists "${DIRECTORY_PATH}"
 #          ARG1:  path to check
 #        RETURN:  1 if path exists, 0 if it doesn't
 #
