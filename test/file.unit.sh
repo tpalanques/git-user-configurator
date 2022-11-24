@@ -22,6 +22,22 @@ file.unit.create_a_folder() {
   rm -rf ${basePath}
 }
 
+file.unit.file_exists() {
+  # Arrange
+    local path="/etc/issue"
+
+    # Assert
+    unit.assertEqual "$(file.fileExists ${path})" "1" "${FUNCNAME[0]}" "File ${path} does not exist"
+}
+
+file.unit.file_does_not_exist() {
+  # Arrange
+      local path="/etc/issues"
+
+      # Assert
+      unit.assertEqual "$(file.fileExists ${path})" "0" "${FUNCNAME[0]}" "File ${path} does exist"
+}
+
 file.unit.folder_exists() {
   # Arrange
   local path="/tmp/"
@@ -73,6 +89,8 @@ file.unit.remove_an_existing_folder() {
 }
 
 file.unit.create_a_folder
+file.unit.file_exists
+file.unit.file_does_not_exist
 file.unit.folder_exists
 file.unit.folder_does_not_exist
 file.unit.get_base_name_form_path

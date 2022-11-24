@@ -39,6 +39,23 @@ file.createFolder() {
 
 #==========================================================================
 #
+#   DESCRIPTION:  Checks if a full path file exists and returns binary boolean information
+#       PRIVACY:  PUBLIC
+#         USAGE:  file.fileExists "${FILE_PATH}"
+#          ARG1:  full path file to check
+#        RETURN:  1 if full path file exists, 0 if it doesn't
+#
+#==========================================================================
+file.fileExists() {
+  if [[ -f "$1" ]]; then
+    echo 1
+  else
+    echo 0
+  fi
+}
+
+#==========================================================================
+#
 #   DESCRIPTION:  Gets a path's base name
 #       PRIVACY:  PUBLIC
 #         USAGE:  file.getBaseName "${FILE_PATH}"
