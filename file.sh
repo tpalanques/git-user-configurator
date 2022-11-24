@@ -8,8 +8,22 @@
 #==========================================================================
 
 #file.append(){
-  # echo string >> filePath
+# echo string >> filePath
 #}
+
+file.create() {
+  local dirname=$(file.getDirName "$1")
+  local basename=$(file.getBaseName "$1")
+
+  # check folder existance
+  if [[ $(file.pathExists "${dirname}${basename}") ]]; then
+    echo "file already exists"
+    # if not file.createFolder
+  else
+    echo "file does not exist"
+  fi
+  # touch file if it doesn't exist
+}
 
 #==========================================================================
 #
@@ -19,17 +33,33 @@
 #          ARG1:  path where folder needs to be created
 #
 #==========================================================================
-file.createFolder(){
+file.createFolder() {
   mkdir -p "$1"
 }
 
-#file.create(){
-  #split path string by last /
-  # check folder existance
-      # if not file.createFolder
-      # else do nothing
-  # touch file
-#}
+#==========================================================================
+#
+#   DESCRIPTION:  Gets a path's base name
+#       PRIVACY:  PUBLIC
+#         USAGE:  file.getBaseName "${FILE_PATH}"
+#          ARG1:  path where to get the base name from
+#
+#==========================================================================
+file.getBaseName() {
+  basename "$1"
+}
+
+#==========================================================================
+#
+#   DESCRIPTION:  Gets a path's dir name
+#       PRIVACY:  PUBLIC
+#         USAGE:  file.getDirName "${FOLDER_PATH}"
+#          ARG1:  path where to get the dir name from
+#
+#==========================================================================
+file.getDirName() {
+  dirname "$1"
+}
 
 #==========================================================================
 #
@@ -39,8 +69,8 @@ file.createFolder(){
 #          ARG1:  base path that needs to be removed
 #
 #==========================================================================
-file.removePath(){
-   rm -rf "$1"
+file.removePath() {
+  rm -rf "$1"
 }
 
 #==========================================================================
@@ -49,12 +79,11 @@ file.removePath(){
 #       PRIVACY:  PUBLIC
 #         USAGE:  file.pathExists "${FILE_PATH}"
 #          ARG1:  path to check
-#        RETURN:  1 if path extists, 0 if it doesn't
+#        RETURN:  1 if path exists, 0 if it doesn't
 #
 #==========================================================================
-file.pathExists(){
-  if [[ -d "$1" ]]
-  then
+file.pathExists() {
+  if [[ -d "$1" ]]; then
     echo 1
   else
     echo 0
