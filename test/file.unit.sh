@@ -1,12 +1,12 @@
 #!/bin/bash
-THIS_PATH=`readlink -f "${BASH_SOURCE[0]}" 2>/dev/null||echo $0`
-DIR_PATH=`dirname "${THIS_PATH}"`
+THIS_PATH=$(readlink -f "${BASH_SOURCE[0]}" 2>/dev/null || echo $0)
+DIR_PATH=$(dirname "${THIS_PATH}")
 source "${DIR_PATH}/../system.sh"
 
 source "$(system.getTestPath)"/unit.sh
 source "$(system.getRootPath)"/file.sh
 
-file.unit.create_a_folder(){
+file.unit.create_a_folder() {
   # Arrange
   local path="/tmp/test/file_unit_create_folder/new/folder"
   local basePath="/tmp/test"
@@ -19,10 +19,10 @@ file.unit.create_a_folder(){
   unit.assertEqual "$(file.pathExists ${path})" "1" "${FUNCNAME[0]}" "Folder ${path} is not present but we created it"
 
   # TearDown
-    rm -rf ${basePath}
+  rm -rf ${basePath}
 }
 
-file.unit.folder_exists(){
+file.unit.folder_exists() {
   # Arrange
   local path="/tmp/"
 
@@ -30,7 +30,7 @@ file.unit.folder_exists(){
   unit.assertEqual "$(file.pathExists ${path})" "1" "${FUNCNAME[0]}" "Folder ${path} does not exist"
 }
 
-file.unit.folder_does_not_exist(){
+file.unit.folder_does_not_exist() {
   # Arrange
   local path="/notExisting/"
 
@@ -38,7 +38,25 @@ file.unit.folder_does_not_exist(){
   unit.assertEqual "$(file.pathExists ${path})" "0" "${FUNCNAME[0]}" "Folder ${path} does exist but it shouldn't"
 }
 
-file.unit.remove_an_existing_folder(){
+file.unit.get_base_name_form_path() {
+  # Arrange
+  local path="/brand/new/path/fileName"
+  local expectedFileName="fileName"
+
+  # Assert
+  unit.assertEqual "$(file.getBaseName ${path})" "${expectedFileName}" "${FUNCNAME[0]}" "Can't get expected file name ${expectedFileName} from ${path}"
+}
+
+file.unit.get_dir_name_form_path() {
+  # Arrange
+  local path="/brand/new/path/fileName"
+  local expectedPath="/brand/new/path"
+
+  # Assert
+  unit.assertEqual "$(file.getDirName ${path})" "${expectedPath}" "${FUNCNAME[0]}" "Can't get expected dirname ${expectedPath} from ${path}"
+}
+
+file.unit.remove_an_existing_folder() {
   # Arrange
   local path="/tmp/test/file_unit_create_folder/new/folder"
   local basePath="/tmp/test"
@@ -51,10 +69,12 @@ file.unit.remove_an_existing_folder(){
   unit.assertEqual "$(file.pathExists ${path})" "0" "${FUNCNAME[0]}" "Folder ${path} is present but we removed it"
 
   # TearDown
-    rm -rf ${basePath}
+  rm -rf ${basePath}
 }
 
 file.unit.create_a_folder
 file.unit.folder_exists
 file.unit.folder_does_not_exist
+file.unit.get_base_name_form_path
+file.unit.get_dir_name_form_path
 file.unit.remove_an_existing_folder
