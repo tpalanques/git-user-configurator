@@ -21,6 +21,23 @@ configuration.unit.deleteFakeConfig() {
   rm -rf ${configuration_unit_basePath}
 }
 
+configuration.unit.retrieve_a_non_existing_configuration() {
+  local configName="undefined"
+  local expectedValue="__UNDEFINED__"
+  # Arrange
+  configuration.unit.buildFakeConfig
+
+  # Act (single line)
+  configurationValue="$(configuration.get $configName $configuration_unit_path)"
+
+  # Assert
+  unit.assertEqual "${configurationValue}" "${expectedValue}" "${FUNCNAME[0]}" "Retrieved configuration ${configName} from ${configuration_unit_path} is wrong. We
+  got '${configurationValue}' but '${expectedValue}' is expected."
+
+  # TearDown
+  configuration.unit.deleteFakeConfig
+}
+
 configuration.unit.retrieve_an_existing_configuration_from_custom_file() {
   local configName="name"
   local expectedValue="Jane User"
@@ -55,18 +72,6 @@ configuration.unit.retrieve_an_existing_configuration_from_default_file() {
   configuration.unit.deleteFakeConfig
 }
 
-configuration.unit.retrieve_a_non_existing_configuration() {
-  # Arrange
-  # create new config file in tmp path
-  # Act (single line)
-  # get configuration
-  # Assert
-  # configuration is "__UNDEFINED__"
-  unit.assertEqual "1" "0" "${FUNCNAME[0]}" "Missing test implementation"
-  # Tear down
-  # remove configuration
-}
-
+configuration.unit.retrieve_a_non_existing_configuration
 configuration.unit.retrieve_an_existing_configuration_from_custom_file
 configuration.unit.retrieve_an_existing_configuration_from_default_file
-#configuration.unit.retrieve_a_non_existing_configuration
