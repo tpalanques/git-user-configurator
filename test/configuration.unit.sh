@@ -7,24 +7,52 @@ source "$(system.getTestPath)"/unit.sh
 source "$(system.getRootPath)"/file.sh
 source "$(system.getRootPath)"/configuration.sh
 
+configuration_unit_basePath='/tmp/test'
+configuration_unit_path="$configuration_unit_basePath/configuration_unit_config"
+
+##TODO document this method
+configuration.unit.buildFakeConfig() {
+  file.create "${configuration_unit_path}"
+  echo "name=Jane User" >"${configuration_unit_path}"
+}
+
+##TODO document this method
+configuration.unit.deleteFakeConfig() {
+  rm -rf ${configuration_unit_basePath}
+}
+
 configuration.unit.retrieve_an_existing_configuration_from_custom_file() {
+  local configName="name"
+  local expectedValue="Jane User"
   # Arrange
-  local basePath='/tmp/test'
-  local configPath="$basePath/configuration_unit_config"
-  local configName="configName"
-  local configValue="config value"
-  file.create "${configPath}"
-  echo "${configName}=${configValue}" >"${configPath}"
+  configuration.unit.buildFakeConfig
 
   # Act (single line)
-  configuration="$(configuration.get $configName $configPath)"
+  configurationValue="$(configuration.get $configName $configuration_unit_path)"
 
   # Assert
-  unit.assertEqual "${configuration}" "${configValue}" "${FUNCNAME[0]}" "Retrieved configuration ${configName} from ${configPath} is wrong. We
-  got '${configuration}' but '${configValue}' is expected."
+  unit.assertEqual "${configurationValue}" "${expectedValue}" "${FUNCNAME[0]}" "Retrieved configuration ${configName} from ${configuration_unit_path} is wrong. We
+  got '${configurationValue}' but '${expectedValue}' is expected."
 
   # TearDown
-  rm -rf ${basePath}
+  configuration.unit.deleteFakeConfig
+}
+
+configuration.unit.retrieve_an_existing_configuration_from_default_file() {
+  local configName="email"
+  local expectedValue="john@doe.com"
+  # Arrange
+  configuration.unit.buildFakeConfig
+
+  # Act (single line)
+  configurationValue="$(configuration.get $configName $configuration_unit_path)"
+
+  # Assert
+  unit.assertEqual "${configurationValue}" "${expectedValue}" "${FUNCNAME[0]}" "Retrieved configuration ${configName} from ${configuration_unit_path} is wrong. We
+  got '${configurationValue}' but '${expectedValue}' is expected."
+
+  # TearDown
+  configuration.unit.deleteFakeConfig
 }
 
 configuration.unit.retrieve_a_non_existing_configuration() {
@@ -40,4 +68,5 @@ configuration.unit.retrieve_a_non_existing_configuration() {
 }
 
 configuration.unit.retrieve_an_existing_configuration_from_custom_file
+configuration.unit.retrieve_an_existing_configuration_from_default_file
 #configuration.unit.retrieve_a_non_existing_configuration
