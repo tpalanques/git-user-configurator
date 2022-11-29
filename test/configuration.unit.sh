@@ -7,22 +7,21 @@ source "$(system.getTestPath)"/unit.sh
 source "$(system.getRootPath)"/file.sh
 source "$(system.getRootPath)"/configuration.sh
 
-configuration.unit.retrieve_an_existing_configuration() {
+configuration.unit.retrieve_an_existing_configuration_from_custom_file() {
   # Arrange
-  local configPath="/tmp/test/configuration_unit_config"
+  local basePath='/tmp/test'
+  local configPath="$basePath/configuration_unit_config"
   local configName="configName"
   local configValue="config value"
-  local basePath='/tmp/test'
   file.create "${configPath}"
   echo "${configName}=${configValue}" >"${configPath}"
 
   # Act (single line)
-  configuration="$(configuration.get $configName)"
+  configuration="$(configuration.get $configName $configPath)"
 
   # Assert
   unit.assertEqual "${configuration}" "${configValue}" "${FUNCNAME[0]}" "Retrieved configuration ${configName} from ${configPath} is wrong. We
-  got '${configuration}' but '${configValue}' is expected.
-  expected"
+  got '${configuration}' but '${configValue}' is expected."
 
   # TearDown
   rm -rf ${basePath}
@@ -40,5 +39,5 @@ configuration.unit.retrieve_a_non_existing_configuration() {
   # remove configuration
 }
 
-configuration.unit.retrieve_an_existing_configuration
+configuration.unit.retrieve_an_existing_configuration_from_custom_file
 #configuration.unit.retrieve_a_non_existing_configuration

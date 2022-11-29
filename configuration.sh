@@ -1,4 +1,8 @@
 #!/bin/bash
+THIS_PATH=$(readlink -f "${BASH_SOURCE[0]}" 2>/dev/null || echo $0)
+DIR_PATH=$(dirname "${THIS_PATH}")
+source "${DIR_PATH}/system.sh"
+
 #==========================================================================
 #
 #          FILE:  configuration.sh
@@ -7,10 +11,8 @@
 #
 #==========================================================================
 
-source system.sh
-
-userConfig=$(system.getRootPath)/conf/user.cfg
-userDefaultConfig=$(system.getRootPath)/default/user.cfg
+userConfigPath=$(system.getRootPath)/conf/user.cfg
+defaultConfigPath=$(system.getRootPath)/default/user.cfg
 
 #==========================================================================
 #
@@ -32,17 +34,18 @@ configuration.readFile() {
 #                 the default file if it couldn't be found
 #       PRIVACY:  PUBLIC
 #         USAGE:  configuration.get "${CONFIGURATION_NAME}"
-#          ARG2:  Configuration name to get
+#          ARG1:  Configuration name to get
+#        [ARG2]:  Configuration file where to get config from
 #
 #==========================================================================
 configuration.get() {
-  local configName
+  local configPath="${2:-$userConfigPath}"
+  local configName="${1}"
   local configValue
-  configName="${1}"
 
-  configValue="$(configuration.readFile "$userConfig" "${configName}")"
+  configValue="$(configuration.readFile "$configPath" "${configName}")"
   if [ "$configValue" = "__UNDEFINED__" ]; then
-    configValue="$(configuration.readFile "$userDefaultConfig" "${configName}")"
+    configValue="$(configuration.readFile "$defaultConfigPath" "${configName}")"
   fi
   echo "${configValue}"
 }
