@@ -10,7 +10,7 @@ source "$(system.getRootPath)"/configuration.sh
 configuration_unit_basePath='/tmp/test'
 configuration_unit_path="$configuration_unit_basePath/configuration_unit_config"
 
-##TODO document this method
+##TODO document this method. After that you should probably start thinking of automating test execution. You're writing every test by hand and that's bad :(
 configuration.unit.buildFakeConfig() {
   file.create "${configuration_unit_path}"
   echo "name=Jane User" >"${configuration_unit_path}"
@@ -18,7 +18,7 @@ configuration.unit.buildFakeConfig() {
 
 ##TODO document this method
 configuration.unit.deleteFakeConfig() {
-  rm -rf ${configuration_unit_basePath}
+  file.removePath ${configuration_unit_basePath}
 }
 
 configuration.unit.retrieve_a_non_existing_configuration() {
