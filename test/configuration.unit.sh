@@ -7,7 +7,7 @@ source "$(system.getTestPath)"/unit.sh
 source "$(system.getRootPath)"/file.sh
 source "$(system.getRootPath)"/configuration.sh
 
-configuration_unit_basePath='/tmp/test'
+configuration_unit_basePath="/tmp/test"
 configuration_unit_path="$configuration_unit_basePath/configuration_unit_config"
 
 #==========================================================================
