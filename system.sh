@@ -36,10 +36,11 @@ system.getTestPath() {
 #
 #   DESCRIPTION:  Lists files in a folder
 #       PRIVACY:  PUBLIC
-#         USAGE:  system.getTestPath
+#         USAGE:  system.listFolder "/folder/to/list"
+#          ARG1:  Folder to list
 #
 #==========================================================================
-system.list() {
+system.listFolder() {
   ls "$1"
 }
 
