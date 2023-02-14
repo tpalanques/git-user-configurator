@@ -34,6 +34,17 @@ system.getTestPath() {
 
 #==========================================================================
 #
+#   DESCRIPTION:  Lists files in a folder
+#       PRIVACY:  PUBLIC
+#         USAGE:  system.getTestPath
+#
+#==========================================================================
+system.list() {
+  ls "$1"
+}
+
+#==========================================================================
+#
 #   DESCRIPTION:  Sets the root path to be appended to the root execution
 #                 directory to find the root path
 #       PRIVACY:  PUBLIC
