@@ -9,6 +9,17 @@
 
 #==========================================================================
 #
+#   DESCRIPTION:  Gets the filename of the calling script
+#       PRIVACY:  PUBLIC
+#         USAGE:  system.getOwnFilename
+#
+#==========================================================================
+system.getOwnFilename() {
+  caller | awk {'print $2'}
+}
+
+#==========================================================================
+#
 #   DESCRIPTION:  Gets root path for this project
 #       PRIVACY:  PUBLIC
 #         USAGE:  system.getRootPath
