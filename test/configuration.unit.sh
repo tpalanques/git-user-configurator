@@ -83,7 +83,3 @@ configuration.unit.retrieve_an_existing_configuration_from_default_file() {
   # TearDown
   configuration.unit.deleteFakeConfig
 }
-
-configuration.unit.retrieve_a_non_existing_configuration
-configuration.unit.retrieve_an_existing_configuration_from_custom_file
-configuration.unit.retrieve_an_existing_configuration_from_default_file

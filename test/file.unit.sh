@@ -102,13 +102,3 @@ file.unit.remove_an_existing_folder() {
   # TearDown
   rm -rf ${basePath}
 }
-
-file.unit.create_a_file
-file.unit.create_a_folder
-file.unit.file_exists
-file.unit.file_does_not_exist
-file.unit.folder_exists
-file.unit.folder_does_not_exist
-file.unit.get_base_name_form_path
-file.unit.get_dir_name_form_path
-file.unit.remove_an_existing_folder
