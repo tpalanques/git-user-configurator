@@ -15,13 +15,16 @@ I'm a bit of a lazy guy so why would I write all this changes every time I start
 a project?
 
 # 2. Description
-This project is written in plain bash and using only built-in libraries so you
+This project is written in plain bash and using only built-in libraries, so you
 may use it in any (more or less) up to date linux system.
 
 # 3. Installation and running
 By now project can't be run :(
 
-# 4. Credits and contributions
+# 4. Testing source code
+Source code can be tested by running `. test/test.sh` in the project root folder
+
+# 5. Credits and contributions
 Git user configurator is possible thanks to many other lines of code. 
 Many thanks to all of this projects
 + [Linux](https://www.linux.org/)
@@ -29,3 +32,7 @@ Many thanks to all of this projects
 
 Contribution are more than welcome, just open an issue in [here](https://github.com/tpalanques/git-user-configurator/issues/new/choose)
 and I'll check it out ASAP.
+
+# 6. Backlog
+* Add some validation on functions to check all received parameters
+* Actually do what project is meant to do
