@@ -22,9 +22,9 @@ source "$(system.getTestPath)"/*
 #
 #==========================================================================
 test.listFiles() {
-  system.listFolder "$(system.getTestPath)" | grep -v test.sh
-  ## todo test.sh shouldn't be hardcoded
+  # FIXME: test.sh shouldn't be hardcoded, we should be able to use the following code
   #system.listFolder "$(system.getTestPath)" | grep -v "$(system.getOwnFilename)"
+  system.listFolder "$(system.getTestPath)" | grep -v test.sh
 }
 
 #==========================================================================
@@ -45,7 +45,7 @@ test.getAllTests() {
 #
 #   DESCRIPTION:  Counts all tests in the test folder
 #       PRIVACY:  PRIVATE
-#         USAGE:  test.getTests
+#         USAGE:  test.countAllTests
 #
 #==========================================================================
 test.countAllTests() {
@@ -63,7 +63,18 @@ test.getTests() {
   cat "$(system.getTestPath)"/"$1" | grep "() {" | grep "_" | awk {'sub("\() {","");print $1'}
 }
 
-## todo document method
+## After this there's 2 options. Either you continue with the project or you start a refactor to check minimum required variables
+#==========================================================================
+#
+#   DESCRIPTION:  Echoes test result. Increments passCounter if passString
+#                 is found or failCounter if it isn't
+#       PRIVACY:  PRIVATE
+#         USAGE:  test.processStatus
+#          ARG1:  Status message
+#          ARG2:  (ref) passCounter
+#          ARG3:  (ref) failCounter
+#
+#==========================================================================
 test.processStatus() {
   local status="${1}"
   local -n pass="${2}"
@@ -74,7 +85,11 @@ test.processStatus() {
     echo -e "[TEST][INFO] ${test} => $(font.green bold) Pass $(font.none)"
     ((pass++))
   else
+    echo -e "$(font.red bold underline)\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t$(font.none)"
     echo -e "$(font.red bold)[TEST][INFO] ${test} => Fail $(font.none)"
+    echo -e "${status}"
+    echo -e "$(font.red bold underline)\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t$(font.none)"
+    echo -e ""
     ((fail++))
   fi
 }
@@ -97,9 +112,9 @@ test.run() {
     test.processStatus "$(${test})" passCount failCount
   done
   if [[ "${failCount}" -eq "0" ]]; then
-    echo -e "[TEST][INFO] $(font.green bold) All ${passCount} tests passed $(font.none)"
+    echo -e "$(font.green bold underline)[TEST][INFO] All ${passCount} tests passed$(font.none)"
   else
-    echo -e "[TEST][INFO] $(font.red bold) ${failCount} tests failed $(font.none)"
+    echo -e "$(font.red bold underline)[TEST][INFO]${failCount} tests failed $(font.none)"
   fi
 }
 
