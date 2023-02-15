@@ -9,10 +9,10 @@ source "${DIR_PATH}/../system.sh"
 #         USAGE:  . test.sh
 #   DESCRIPTION:  script to run bash tests
 #
+
 #==========================================================================
 
 source "$(system.getRootPath)"/font.sh
-source "$(system.getTestPath)"/*
 
 #==========================================================================
 #
@@ -25,6 +25,7 @@ test.listFiles() {
   # FIXME: test.sh shouldn't be hardcoded, we should be able to use the following code
   #system.listFolder "$(system.getTestPath)" | grep -v "$(system.getOwnFilename)"
   system.listFolder "$(system.getTestPath)" | grep -v test.sh
+
 }
 
 #==========================================================================
@@ -94,6 +95,19 @@ test.processStatus() {
   fi
 }
 
+test.sourceTestFiles() {
+  local ownFileName
+  ownFileName="$(system.getOwnFilename)"
+
+  for testFile in $(test.listFiles); do
+    local fullFileName
+    fullFileName=$(system.getTestPath)/${testFile}
+    if [[ "${fullFileName}" != *"${ownFileName}"* ]]; then
+      source "${fullFileName}"
+    fi
+  done
+}
+
 #==========================================================================
 #
 #   DESCRIPTION:  Runs all tests in the test folder
@@ -105,6 +119,8 @@ test.run() {
   local passCount=0
   local failCount=0
 
+  echo -e "[TEST][INFO] Sourcing test files..."
+  test.sourceTestFiles
   echo -e "[TEST][INFO] Gathering tests..."
   tests=$(test.getAllTests)
   echo -e "[TEST][INFO] Running $(font.green bold)$(test.countAllTests) tests $(font.none)"
