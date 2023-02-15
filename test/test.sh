@@ -9,7 +9,6 @@ source "${DIR_PATH}/../system.sh"
 #         USAGE:  . test.sh
 #   DESCRIPTION:  script to run bash tests
 #
-
 #==========================================================================
 
 source "$(system.getRootPath)"/font.sh
