@@ -40,6 +40,7 @@ test.listFiles() {
 #
 #==========================================================================
 test.getAllTests() {
+  local files
   files="$(test.listFiles)"
   for file in ${files[*]}; do
     test.getTests "${file}"
