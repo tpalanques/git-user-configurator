@@ -22,10 +22,15 @@ source "$(system.getRootPath)"/font.sh
 #
 #==========================================================================
 test.listFiles() {
-  # FIXME: test.sh shouldn't be hardcoded, we should be able to use the following code
-  #system.listFolder "$(system.getTestPath)" | grep -v "$(system.getOwnFilename)"
-  system.listFolder "$(system.getTestPath)" | grep -v test.sh
-
+  local ownFileName
+  ownFileName="$(system.getOwnFilename)"
+  for file in $(system.listFolder "$(system.getTestPath)"); do
+    local fullFileName
+    fullFileName=$(system.getTestPath)/${file}
+    if [[ "${fullFileName}" != *"${ownFileName}"* ]]; then
+      echo "${fullFileName}"
+    fi
+  done
 }
 
 #==========================================================================
@@ -61,7 +66,7 @@ test.countAllTests() {
 #
 #==========================================================================
 test.getTests() {
-  cat "$(system.getTestPath)"/"$1" | grep "() {" | grep "_" | awk {'sub("\() {","");print $1'}
+  cat "$1" | grep "() {" | grep "_" | awk {'sub("\() {","");print $1'}
 }
 
 ## After this there's 2 options. Either you continue with the project or you start a refactor to check minimum required variables
@@ -95,19 +100,6 @@ test.processStatus() {
   fi
 }
 
-test.sourceTestFiles() {
-  local ownFileName
-  ownFileName="$(system.getOwnFilename)"
-
-  for testFile in $(test.listFiles); do
-    local fullFileName
-    fullFileName=$(system.getTestPath)/${testFile}
-    if [[ "${fullFileName}" != *"${ownFileName}"* ]]; then
-      source "${fullFileName}"
-    fi
-  done
-}
-
 #==========================================================================
 #
 #   DESCRIPTION:  Runs all tests in the test folder
@@ -120,7 +112,7 @@ test.run() {
   local failCount=0
 
   echo -e "[TEST][INFO] Sourcing test files..."
-  test.sourceTestFiles
+  system.source $(test.listFiles)
   echo -e "[TEST][INFO] Gathering tests..."
   tests=$(test.getAllTests)
   echo -e "[TEST][INFO] Running $(font.green bold)$(test.countAllTests) tests $(font.none)"

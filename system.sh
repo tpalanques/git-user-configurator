@@ -67,3 +67,17 @@ system.listFolder() {
 system.setRootPath() {
   export ROOT_PATH=$1
 }
+
+#==========================================================================
+#
+#   DESCRIPTION:  Source multiple given files
+#       PRIVACY:  PUBLIC
+#         USAGE:  system.source "/my/first/script.sh" "/my/second/script"
+#         ARG N:  script list
+#
+#==========================================================================
+system.source(){
+  for testFile in $(test.listFiles); do
+      source "${testFile}"
+  done
+}
