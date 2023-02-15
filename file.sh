@@ -7,10 +7,6 @@
 #
 #==========================================================================
 
-#file.append(){
-# echo string >> filePath
-#}
-
 file.create() {
   local fullPath="${1}"
   local dirName
