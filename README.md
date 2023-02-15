@@ -35,4 +35,5 @@ and I'll check it out ASAP.
 
 # 6. Backlog
 * Add some validation on functions to check all received parameters
+* Add test to validate headers in all scripts
 * Actually do what project is meant to do
