@@ -16,7 +16,7 @@ source "$(system.getRootPath)/script.sh"
 
 #==========================================================================
 #
-#   DESCRIPTION:  Throws an invalid argument number error to the standard
+#   DESCRIPTION:  Throws an invalid argument number error to standard
 #                 output
 #       PRIVACY:  PUBLIC
 #         USAGE:  error.invalidArgumentNumber "$(system.getOwnFilename)" 3 2
@@ -25,27 +25,35 @@ source "$(system.getRootPath)/script.sh"
 #
 #==========================================================================
 error.invalidArgumentNumber() {
+  local functionGivenArguments=$#
   local functionExpectedArguments="3"
-  valid=$(script.validateParameters "${functionExpectedArguments}" "$@")
-  if [[ "${valid}" == "1" ]]; then
+  if [[ "${functionGivenArguments}" == "${functionExpectedArguments}" ]]; then
     local scriptName=$1
     local expectedArguments=$2
     local givenArguments=$3
+    if [[ "${expectedArguments}" == "unknown" ]]; then
+      echo -e "[${scriptName}]$(font.red bold)[ERROR]$(font.none) Wrong arguments. Expected unknown, but ${givenArguments} given" >&2
+      return 1
+    fi
     if [[ "${givenArguments}" -gt "${expectedArguments}" ]]; then
-      echo -e "[${scriptName}]$(font.red bold)[ERROR]$(font.none) Too much arguments. Expected ${expectedArguments}, ${givenArguments} given"
+      echo -e "[${scriptName}]$(font.red bold)[ERROR]$(font.none) Too much arguments. Expected ${expectedArguments}, but ${givenArguments} given" >&2
+      return 1
     fi
     if [[ "${givenArguments}" -lt "${expectedArguments}" ]]; then
-      echo -e "[${scriptName}]$(font.red bold)[ERROR]$(font.none) Some arguments missing. Expected ${expectedArguments}, ${givenArguments} given"
+      echo -e "[${scriptName}]$(font.red bold)[ERROR]$(font.none) Some arguments missing. Expected ${expectedArguments}, but ${givenArguments} given" >&2
+      return 1
     fi
+    return 0
   else
-    echo -e "$(font.red bold)[ERROR][ERROR] Can't throw invalidArgumentNumber error message, Invalid arguments. Expected ${functionExpectedArguments}, $#
-    given$(font.none)"
+    echo -e "$(font.red bold)[ERROR][ERROR] Can't throw invalidArgumentNumber error message, Invalid arguments. Expected ${functionExpectedArguments}, but $#
+    given$(font.none)" >&2
+    return 1
   fi
 }
 
 #==========================================================================
 #
-#   DESCRIPTION:  Throws an invalid argument number error to the standard
+#   DESCRIPTION:  Throws an invalid argument number error to standard
 #                 output
 #       PRIVACY:  PUBLIC
 #         USAGE:  error.pathDoesNotExist "$(system.getOwnFilename)" "/path/to/file"
@@ -54,14 +62,28 @@ error.invalidArgumentNumber() {
 #
 #==========================================================================
 error.pathDoesNotExist() {
-  local functionExpectedArguments="2"
-  valid=$(script.validateParameters "${functionExpectedArguments}" "$@")
-  if [[ "${valid}" == "1" ]]; then
+  script.validateParameters "$(system.getOwnFilename)" "2" "$@"
+  if [ $? == "0" ]; then
     local scriptName=$1
     local path=$2
-    echo -e "[${scriptName}]$(font.red bold)[ERROR]$(font.none) Path '${path}' does not exist"
-  else
-    echo -e "$(font.red bold)[ERROR][ERROR] Can't throw pathDoesNotExist error message, Invalid arguments. Expected ${functionExpectedArguments}, $# given$
-    (font.none)"
+    echo -e "[${scriptName}]$(font.red bold)[ERROR]$(font.none) Path '${path}' does not exist" >&2
+  fi
+}
+
+#==========================================================================
+#
+#   DESCRIPTION:  Throws a "no git project" error to standard output
+#       PRIVACY:  PUBLIC
+#         USAGE:  error.pathIsNotAGitProject "$(system.getOwnFilename)" "/path/to/file"
+#          ARG1:  Thrower script name. This can be get from "$(system.getOwnFilename)"
+#          ARG2:  Path that is not a git project
+#
+#==========================================================================
+error.pathIsNotAGitProject() {
+  script.validateParameters "$(system.getOwnFilename)" "2" "$@"
+  if [ $? == "0" ]; then
+    local scriptName=$1
+    local path=$2
+    echo -e "[${scriptName}]$(font.red bold)[ERROR]$(font.none) Path '${path}' is not a git project" >&2
   fi
 }

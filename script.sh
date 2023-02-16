@@ -11,32 +11,33 @@ source "${DIR_PATH}/system.sh"
 #
 #==========================================================================
 
-source "$(system.getRootPath)/font.sh"
-
 #==========================================================================
 #
-#   DESCRIPTION:  Checks number of arguments for a script. After calling
-#                 this function you should probably check the returned
-#                 value in order to throw an error if it's not 1.
+#   DESCRIPTION:  Checks number of arguments for a script. Throws error
+#                 message to error bus if needed
 #       PRIVACY:  PUBLIC
-#         USAGE:  script.validateParameters 3 "$@"
-#          ARG1:  Expected number of arguments
+#         USAGE:  script.validateParameters "$(system.getOwnFilename)" 3 "$@"
+#          ARG1:  Checking script name. This can be get from "$(system.getOwnFilename)"
+#          ARG2:  Expected number of arguments
 #          ARG2:  Should be fixed to "$@" to pass all received arguments
 #      COMMENTS:  After calling this function
 #
 #==========================================================================
 script.validateParameters() {
-  local totalParameters=$#
-  if [[ "${totalParameters}" -gt "0" ]]; then
-    local expectedParameters="${1}"
-    shift
-    totalParameters=$#
-    if [[ "${totalParameters}" -eq "${expectedParameters}" ]]; then
-      echo 1
-    else
-      echo 0
+  local givenParameters=$#
+  local expectedParameters=2
+  if [[ "${givenParameters}" -gt "${expectedParameters}" ]]; then
+    local scriptName="${1}"
+    local expectedParameters="${2}"
+    shift 2
+    givenParameters=$#
+    if [[ "${givenParameters}" -eq "${expectedParameters}" ]]; then
+      return 0
     fi
+    error.invalidArgumentNumber "${scriptName}" "${expectedParameters}" "${givenParameters}"
+    return 1
   else
-    echo -e "$(font.red bold underline)[SCRIPT][ERROR] Some missing parameters $(font.none)"
+    error.invalidArgumentNumber "$(system.getOwnFilename)" "unknown" "${givenParameters}"
+    return 1
   fi
 }
