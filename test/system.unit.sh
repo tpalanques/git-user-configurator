@@ -6,7 +6,7 @@ source "${DIR_PATH}/../system.sh"
 source "$(system.getRootPath)"/file.sh
 source "$(system.getTestPath)"/unit.sh
 
-system.unit.list_folder() {
+system.unit.list_existing_folder() {
   # Arrange
   local path="/tmp/test/system_unit_list_folder/"
 
@@ -28,7 +28,6 @@ system.unit.list_folder() {
   folderList="$(system.listFolder ${path})"
 
   # Assert
-  echo -e "${expectedList}"
   unit.assertEqual "${folderList}" "${expectedList}" "${FUNCNAME[0]}" "List folder ${path} returned ${folderList}"
 
   # TearDown
