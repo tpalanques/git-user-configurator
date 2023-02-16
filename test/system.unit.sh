@@ -3,8 +3,8 @@ THIS_PATH=$(readlink -f "${BASH_SOURCE[0]}" 2>/dev/null || echo $0)
 DIR_PATH=$(dirname "${THIS_PATH}")
 source "${DIR_PATH}/../system.sh"
 
-source "$(system.getRootPath)"/file.sh
 source "$(system.getTestPath)"/unit.sh
+source "$(system.getRootPath)"/file.sh
 
 system.unit.list_existing_folder() {
   # Arrange
@@ -13,9 +13,9 @@ system.unit.list_existing_folder() {
   local basePath="/tmp/test"
   rm -rf ${basePath}
 
-  local subPath1="/tmp/test/system_unit_list_folder/firstFolder"
-  local subPath2="/tmp/test/system_unit_list_folder/secondFolder"
-  local subPath3="/tmp/test/system_unit_list_folder/thirdFolder"
+  local subPath1="${basePath}/system_unit_list_folder/firstFolder"
+  local subPath2="${basePath}/system_unit_list_folder/secondFolder"
+  local subPath3="${basePath}/system_unit_list_folder/thirdFolder"
   file.createFolder "${subPath1}"
   file.createFolder "${subPath2}"
   file.createFolder "${subPath3}"
