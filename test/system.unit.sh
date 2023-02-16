@@ -25,10 +25,31 @@ system.unit.list_existing_folder() {
 
   # Act
   local folderList
+  local folderListRetval
   folderList="$(system.listFolder ${path})"
+  folderListReturnValue=$?
 
   # Assert
   unit.assertEqual "${folderList}" "${expectedList}" "${FUNCNAME[0]}" "List folder ${path} returned ${folderList}"
+  unit.assertEqual "${folderListReturnValue}" "0" "${FUNCNAME[0]}" "List folder should return 0, returned ${folderListReturnValue}"
+
+  # TearDown
+  rm -rf ${basePath}
+}
+
+system.unit.list_non_existing_folder() {
+  # Arrange
+  local path="/tmp/non/existing/path"
+
+  # Act
+  local folderList
+  local folderListRetval
+  folderList="$(system.listFolder ${path})" 2>/dev/null
+  folderListReturnValue=$?
+
+  # Assert
+  unit.assertEqual "${folderList}" "" "${FUNCNAME[0]}" "List folder ${path} returned ${folderList}"
+  unit.assertEqual "${folderListReturnValue}" "2" "${FUNCNAME[0]}" "List folder should return 1, returned ${folderListReturnValue}"
 
   # TearDown
   rm -rf ${basePath}
