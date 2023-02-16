@@ -22,7 +22,6 @@ source "$(system.getRootPath)/script.sh"
 #         USAGE:  error.invalidArgumentNumber "$(system.getOwnFilename)" 3 2
 #          ARG1:  Thrower script name. This can be get from "$(system.getOwnFilename)"
 #          ARG2:  Expected number of arguments
-#      COMMENTS:  Given number of arguments
 #
 #==========================================================================
 error.invalidArgumentNumber() {
@@ -30,11 +29,8 @@ error.invalidArgumentNumber() {
   valid=$(script.validateParameters "${functionExpectedArguments}" "$@")
   if [[ "${valid}" == "1" ]]; then
     local scriptName=$1
-    shift
-    local expectedArguments=$1
-    shift
-    local givenArguments=$1
-    shift
+    local expectedArguments=$2
+    local givenArguments=$3
     if [[ "${givenArguments}" -gt "${expectedArguments}" ]]; then
       echo -e "[${scriptName}]$(font.red bold)[ERROR]$(font.none) Too much arguments. Expected ${expectedArguments}, ${givenArguments} given"
     fi
@@ -42,6 +38,30 @@ error.invalidArgumentNumber() {
       echo -e "[${scriptName}]$(font.red bold)[ERROR]$(font.none) Some arguments missing. Expected ${expectedArguments}, ${givenArguments} given"
     fi
   else
-    echo -e "$(font.red bold)[ERROR][ERROR] Can't throw error message, Invalid arguments. Expected ${functionExpectedArguments}, $# given$(font.none)"
+    echo -e "$(font.red bold)[ERROR][ERROR] Can't throw invalidArgumentNumber error message, Invalid arguments. Expected ${functionExpectedArguments}, $#
+    given$(font.none)"
+  fi
+}
+
+#==========================================================================
+#
+#   DESCRIPTION:  Throws an invalid argument number error to the standard
+#                 output
+#       PRIVACY:  PUBLIC
+#         USAGE:  error.pathDoesNotExist "$(system.getOwnFilename)" "/path/to/file"
+#          ARG1:  Thrower script name. This can be get from "$(system.getOwnFilename)"
+#          ARG2:  Path that does not exist
+#
+#==========================================================================
+error.pathDoesNotExist() {
+  local functionExpectedArguments="2"
+  valid=$(script.validateParameters "${functionExpectedArguments}" "$@")
+  if [[ "${valid}" == "1" ]]; then
+    local scriptName=$1
+    local path=$2
+    echo -e "[${scriptName}]$(font.red bold)[ERROR]$(font.none) Path '${path}' does not exist"
+  else
+    echo -e "$(font.red bold)[ERROR][ERROR] Can't throw pathDoesNotExist error message, Invalid arguments. Expected ${functionExpectedArguments}, $# given$
+    (font.none)"
   fi
 }
