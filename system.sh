@@ -52,6 +52,7 @@ system.getTestPath() {
 #
 #==========================================================================
 system.listFolder() {
+  script.validateParameters "$(system.getOwnFilename)" 1 "$@"
   ls "$1"
 }
 
@@ -65,6 +66,7 @@ system.listFolder() {
 #
 #==========================================================================
 system.setRootPath() {
+  script.validateParameters "$(system.getOwnFilename)" 1 "$@"
   export ROOT_PATH=$1
 }
 
@@ -77,6 +79,7 @@ system.setRootPath() {
 #
 #==========================================================================
 system.source(){
+  # FIXME: add parameter check
   for testFile in $(test.listFiles); do
       source "${testFile}"
   done

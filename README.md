@@ -34,7 +34,10 @@ Contribution are more than welcome, just open an issue in [here](https://github.
 and I'll check it out ASAP.
 
 # 6. Backlog
-* Add test to validate headers in all scripts
+* Add test to validate headers in all functions
 * Add parameter validation to all scripts
+* unit test system.listFolder
+* unit test system.setRootPath
+* Add parameter validation for optional parameter methods
 * Actually do what project is meant to do
 * Add unit testing to error.invalidArgumentNumber

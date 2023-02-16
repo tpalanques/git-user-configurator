@@ -25,6 +25,7 @@ defaultConfigPath=$(system.getRootPath)/default/user.cfg
 #
 #==========================================================================
 configuration.readFile() {
+  script.validateParameters "$(system.getOwnFilename)" 2 "$@"
   (grep -E "^${2}=" -m 1 "${1}" 2>/dev/null || echo "VAR=__UNDEFINED__") | head -n 1 | cut -d '=' -f 2-
 }
 
@@ -39,6 +40,7 @@ configuration.readFile() {
 #
 #==========================================================================
 configuration.get() {
+  # FIXME: no parameter check is done in here
   local configPath="${2:-$userConfigPath}"
   local configName="${1}"
   local configValue
