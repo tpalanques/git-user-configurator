@@ -37,7 +37,6 @@ and I'll check it out ASAP.
 * Change script.validateParameters calls to add script and method name instead of full path name 
 * Add test to validate headers in all functions
 * Add parameter validation to all scripts
-* unit test system.setRootPath
 * Add parameter validation for optional parameter methods
 * Actually do what project is meant to do
 * Add unit testing to error.invalidArgumentNumber

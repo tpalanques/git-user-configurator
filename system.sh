@@ -29,7 +29,10 @@ system.getRootPath() {
   if [[ ! -v ROOT_PATH ]]; then
     local ROOT_PATH=''
   fi
-  ( cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd ; echo "${ROOT_PATH}"; ) | tr -d '\n'
+  (
+    cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd
+    echo "${ROOT_PATH}"
+  ) | tr -d '\n'
 }
 
 #==========================================================================
@@ -59,29 +62,15 @@ system.listFolder() {
 
 #==========================================================================
 #
-#   DESCRIPTION:  Sets the root path to be appended to the root execution
-#                 directory to find the root path
-#       PRIVACY:  PUBLIC
-#         USAGE:  system.setRootPath "/my/root/path"
-#          ARG1:  New root path
-#
-#==========================================================================
-system.setRootPath() {
-  script.validateParameters "$(system.getOwnFilename)" 1 "$@"
-  export ROOT_PATH=$1
-}
-
-#==========================================================================
-#
 #   DESCRIPTION:  Source multiple given files
 #       PRIVACY:  PUBLIC
 #         USAGE:  system.source "/my/first/script.sh" "/my/second/script"
 #         ARG N:  script list
 #
 #==========================================================================
-system.source(){
+system.source() {
   # FIXME: add parameter check
   for testFile in $(test.listFiles); do
-      source "${testFile}"
+    source "${testFile}"
   done
 }
