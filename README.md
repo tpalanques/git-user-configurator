@@ -34,7 +34,6 @@ Contribution are more than welcome, just open an issue in [here](https://github.
 and I'll check it out ASAP.
 
 # 6. Backlog
-* Change script.validateParameters calls to add script and method name instead of full path name 
 * Add test to validate headers in all functions
 * Add parameter validation to all scripts
 * Add parameter validation for optional parameter methods
