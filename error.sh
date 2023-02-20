@@ -56,17 +56,15 @@ error.invalidArgumentNumber() {
 #   DESCRIPTION:  Throws an invalid argument number error to standard
 #                 output
 #       PRIVACY:  PUBLIC
-#         USAGE:  error.pathDoesNotExist "$(system.getOwnFilename)" "/path/to/file"
-#          ARG1:  Thrower script name. This can be get from "$(system.getOwnFilename)"
-#          ARG2:  Path that does not exist
+#         USAGE:  error.pathDoesNotExist "/path/to/file"
+#          ARG1:  Path that does not exist
 #
 #==========================================================================
 error.pathDoesNotExist() {
-  script.validateParameters "$(system.getOwnFilename)" "2" "$@"
+  script.validateParameters "$(system.getOwnFilename)" "1" "$@"
   if [ $? == "0" ]; then
-    local scriptName=$1
-    local path=$2
-    echo -e "[${scriptName}]$(font.red bold)[ERROR]$(font.none) Path '${path}' does not exist" >&2
+    local path=$1
+    echo -e "[$(caller)]$(font.red bold)[ERROR]$(font.none) Path '${path}' does not exist" >&2
   fi
 }
 
