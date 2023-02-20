@@ -74,16 +74,14 @@ error.pathDoesNotExist() {
 #
 #   DESCRIPTION:  Throws a "no git project" error to standard output
 #       PRIVACY:  PUBLIC
-#         USAGE:  error.pathIsNotAGitProject "$(system.getOwnFilename)" "/path/to/file"
-#          ARG1:  Thrower script name. This can be get from "$(system.getOwnFilename)"
-#          ARG2:  Path that is not a git project
+#         USAGE:  error.pathIsNotAGitProject "/path/to/file"
+#          ARG1:  Path that is not a git project
 #
 #==========================================================================
 error.pathIsNotAGitProject() {
-  script.validateParameters "$(system.getOwnFilename)" "2" "$@"
+  script.validateParameters "$(system.getOwnFilename)" "1" "$@"
   if [ $? == "0" ]; then
-    local scriptName=$1
-    local path=$2
-    echo -e "[${scriptName}]$(font.red bold)[ERROR]$(font.none) Path '${path}' is not a git project" >&2
+    local path=$1
+    echo -e "[$(caller)]$(font.red bold)[ERROR]$(font.none) Path '${path}' is not a git project" >&2
   fi
 }
