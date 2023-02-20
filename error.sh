@@ -19,7 +19,7 @@ source "$(system.getRootPath)/script.sh"
 #   DESCRIPTION:  Throws an invalid argument number error to standard
 #                 output
 #       PRIVACY:  PUBLIC
-#         USAGE:  error.invalidArgumentNumber "$(system.getOwnFilename)" 3 2
+#         USAGE:  error.invalidArgumentNumber 3 2
 #          ARG1:  Thrower script name. This can be get from "$(system.getOwnFilename)"
 #          ARG2:  Expected number of arguments
 #
@@ -28,19 +28,19 @@ error.invalidArgumentNumber() {
   local functionGivenArguments=$#
   local functionExpectedArguments="3"
   if [[ "${functionGivenArguments}" == "${functionExpectedArguments}" ]]; then
-    local scriptName=$1
+    local trace=$1
     local expectedArguments=$2
     local givenArguments=$3
     if [[ "${expectedArguments}" == "unknown" ]]; then
-      echo -e "[${scriptName}]$(font.red bold)[ERROR]$(font.none) Wrong arguments. Expected unknown, but ${givenArguments} given" >&2
+      echo -e "[${trace}]$(font.red bold)[ERROR]$(font.none) Wrong arguments. Expected unknown, but ${givenArguments} given" >&2
       return 1
     fi
     if [[ "${givenArguments}" -gt "${expectedArguments}" ]]; then
-      echo -e "[${scriptName}]$(font.red bold)[ERROR]$(font.none) Too much arguments. Expected ${expectedArguments}, but ${givenArguments} given" >&2
+      echo -e "[${trace}]$(font.red bold)[ERROR]$(font.none) Too much arguments. Expected ${expectedArguments}, but ${givenArguments} given" >&2
       return 1
     fi
     if [[ "${givenArguments}" -lt "${expectedArguments}" ]]; then
-      echo -e "[${scriptName}]$(font.red bold)[ERROR]$(font.none) Some arguments missing. Expected ${expectedArguments}, but ${givenArguments} given" >&2
+      echo -e "[${trace}]$(font.red bold)[ERROR]$(font.none) Some arguments missing. Expected ${expectedArguments}, but ${givenArguments} given" >&2
       return 1
     fi
     return 0
@@ -61,7 +61,7 @@ error.invalidArgumentNumber() {
 #
 #==========================================================================
 error.pathDoesNotExist() {
-  script.validateParameters "$(system.getOwnFilename)" "1" "$@"
+  script.validateParameters "1" "$@"
   if [ $? == "0" ]; then
     local path=$1
     echo -e "[$(caller)]$(font.red bold)[ERROR]$(font.none) Path '${path}' does not exist" >&2
@@ -77,7 +77,7 @@ error.pathDoesNotExist() {
 #
 #==========================================================================
 error.pathIsNotAGitProject() {
-  script.validateParameters "$(system.getOwnFilename)" "1" "$@"
+  script.validateParameters "1" "$@"
   if [ $? == "0" ]; then
     local path=$1
     echo -e "[$(caller)]$(font.red bold)[ERROR]$(font.none) Path '${path}' is not a git project" >&2

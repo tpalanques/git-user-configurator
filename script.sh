@@ -13,31 +13,52 @@ source "${DIR_PATH}/system.sh"
 
 #==========================================================================
 #
+#   DESCRIPTION:  Gets formatted stack trace from given stack
+#       PRIVACY:  PRIVATE
+#         USAGE:  trace=$(script.getStackTrace "$(caller)")
+#          ARG1:  Trace, tipically $(caller)
+#
+#==========================================================================
+script.getStackTrace() {
+  local givenParameters=$#
+  local expectedParameters=1
+  if [[ "${givenParameters}" == "${expectedParameters}" ]]; then
+    echo -e "$(echo -e "${1}" | awk {'print $2":"$1'})"
+    return 0
+  else
+    return 1
+  fi
+}
+
+#==========================================================================
+#
 #   DESCRIPTION:  Checks number of arguments for a script. Throws error
 #                 message to error bus if needed
 #       PRIVACY:  PUBLIC
-#         USAGE:  script.validateParameters "$(system.getOwnFilename)" 3 "$@"
-#          ARG1:  Checking script name. This can be get from "$(system.getOwnFilename)"
-#          ARG2:  Expected number of arguments
+#         USAGE:  script.validateParameters 3 "$@"
+#          ARG1:  Expected number of arguments
 #          ARG2:  Should be fixed to "$@" to pass all received arguments
-#      COMMENTS:  After calling this function
+#      COMMENTS:  After calling this function you might want to check
+#                 its results with:
+#                     if [ $? -eq 0 ]; then
 #
 #==========================================================================
 script.validateParameters() {
   local givenParameters=$#
-  local expectedParameters=2
+  local expectedParameters=1
+  local trace
+  trace=$(script.getStackTrace "$(caller)")
   if [[ "${givenParameters}" -gt "${expectedParameters}" ]]; then
-    local scriptName="${1}"
-    local expectedParameters="${2}"
-    shift 2
+    local expectedParameters="${1}"
+    shift 1
     givenParameters=$#
     if [[ "${givenParameters}" -eq "${expectedParameters}" ]]; then
       return 0
     fi
-    error.invalidArgumentNumber "${scriptName}" "${expectedParameters}" "${givenParameters}"
+    error.invalidArgumentNumber "${trace}" "${expectedParameters}" "${givenParameters}"
     return 1
   else
-    error.invalidArgumentNumber "$(system.getOwnFilename)" "unknown" "${givenParameters}"
+    error.invalidArgumentNumber "${trace}" "unknown" "${givenParameters}"
     return 1
   fi
 }

@@ -55,7 +55,7 @@ system.getTestPath() {
 #
 #==========================================================================
 system.listFolder() {
-  script.validateParameters "$(system.getOwnFilename)" 1 "$@"
+  script.validateParameters 1 "$@"
   ls "$1" 2>/dev/null
   return $?
 }

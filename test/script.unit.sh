@@ -12,7 +12,7 @@ script.unit.dont_validate_invalid_call() {
   local parameters="first second"
 
   # Act
-  script.validateParameters "$(system.getOwnFilename)" "${expectedParameters}" ${parameters} 2>/dev/null
+  script.validateParameters "${expectedParameters}" ${parameters} 2>/dev/null
 
   # Assert
   unit.assertEqual "$?" "1" "${FUNCNAME[0]}" "Script validates '${parameters}' when ${expectedParameters} parameters are expected"
@@ -24,7 +24,7 @@ script.unit.validate_valid_call() {
   local parameters="first second third"
 
   # Act
-  script.validateParameters "$(system.getOwnFilename)" "${expectedParameters}" ${parameters} 2>/dev/null
+  script.validateParameters "${expectedParameters}" ${parameters} 2>/dev/null
 
   # Assert
   unit.assertEqual "$?" "0" "${FUNCNAME[0]}" "Script validates '${parameters}' when ${expectedParameters} parameters are expected"

@@ -12,7 +12,7 @@ source "${DIR_PATH}/system.sh"
 #==========================================================================
 
 file.create() {
-  script.validateParameters "$(system.getOwnFilename)" 1 "$@"
+  script.validateParameters 1 "$@"
   local fullPath="${1}"
   local dirName
   dirName=$(file.getDirName "$1")
@@ -34,7 +34,7 @@ file.create() {
 #
 #==========================================================================
 file.createFolder() {
-  script.validateParameters "$(system.getOwnFilename)" 1 "$@"
+  script.validateParameters 1 "$@"
   mkdir -p "$1"
 }
 
@@ -48,7 +48,7 @@ file.createFolder() {
 #
 #==========================================================================
 file.fileExists() {
-  script.validateParameters "$(system.getOwnFilename)" 1 "$@"
+  script.validateParameters 1 "$@"
   if [[ -f "$1" ]]; then
     echo 1
   else
@@ -65,7 +65,7 @@ file.fileExists() {
 #
 #==========================================================================
 file.getBaseName() {
-  script.validateParameters "$(system.getOwnFilename)" 1 "$@"
+  script.validateParameters 1 "$@"
   basename "$1"
 }
 
@@ -78,7 +78,7 @@ file.getBaseName() {
 #
 #==========================================================================
 file.getDirName() {
-  script.validateParameters "$(system.getOwnFilename)" 1 "$@"
+  script.validateParameters 1 "$@"
   dirname "$1"
 }
 
@@ -91,7 +91,7 @@ file.getDirName() {
 #
 #==========================================================================
 file.removePath() {
-  script.validateParameters "$(system.getOwnFilename)" 1 "$@"
+  script.validateParameters 1 "$@"
   rm -rf "$1"
 }
 
@@ -105,7 +105,7 @@ file.removePath() {
 #
 #==========================================================================
 file.pathExists() {
-  script.validateParameters "$(system.getOwnFilename)" 1 "$@"
+  script.validateParameters 1 "$@"
   if [[ -d "$1" ]]; then
     echo 1
   else
